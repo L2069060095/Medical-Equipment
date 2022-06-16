@@ -152,7 +152,7 @@
 			border-bottom: 1px solid #ccc;
 			.tlt{
 				margin-left: 20rpx;
-				width: 40%;
+				width: 30%;
 				height: 20px;
 				line-height: 20px;
 				text-align: center;
@@ -173,7 +173,7 @@
 			border-bottom: 1px solid #ccc;
 			.tlt{
 				margin-left: 20rpx;
-				width: 40%;
+				width: 35%;
 				height: 20px;
 				line-height: 20px;
 				text-align: center;

@@ -13,7 +13,10 @@
     "pages/ldhscore/ldhscore",
     "pages/ldhdiscount/ldhdiscount",
     "pages/ldhcard/ldhcard",
-    "pages/ldhbalance/ldhbalance"
+    "pages/ldhbalance/ldhbalance",
+    "pages/ldhget/ldhget",
+    "pages/ldhconvert/ldhconvert",
+    "pages/ldhgrade/ldhgrade"
   ],
   "window": {
     "navigationBarTextStyle": "black",

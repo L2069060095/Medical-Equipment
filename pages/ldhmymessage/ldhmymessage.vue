@@ -31,12 +31,11 @@
 </template>
 
 <script>
+	import { mapState } from 'vuex'
 	export default {
 		data() {
 			return {
-				userInfo: {
-					avatarUrl: "https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83epu5jNibT5PYAA1ftoXibsTy5rdO2FIIDJ9ZLMZFhDPnkheVG7q0icicOm7iaxiaEz4CQ9j7LzXlHCSG0og/132"
-				},
+				
 				code:{
 					qr:"https://img0.baidu.com/it/u=3881180510,1470858589&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
 					},
@@ -45,7 +44,9 @@
 				}
 			}
 		},
-		
+		computed:{
+			...mapState(['userInfo']),
+		},
 		methods: {
 			tobalance(){
 				uni.navigateTo({

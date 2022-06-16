@@ -24,17 +24,17 @@
     "useStaticServer": true,
     "showES6CompileOption": false,
     "checkInvalidKey": true,
+    "compileHotReLoad": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
     "disableUseStrict": false,
-    "useCompilerPlugins": false,
-    "minifyWXML": true
+    "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
-  "libVersion": "2.24.5",
+  "libVersion": "2.24.6",
   "appid": "wxe37fa6165c7aac3c",
   "projectname": "vue小程序项目",
   "condition": {},

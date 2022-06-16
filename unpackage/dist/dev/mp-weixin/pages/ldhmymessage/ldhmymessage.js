@@ -1,11 +1,24 @@
 "use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
 var common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
     return {
-      userInfo: {
-        avatarUrl: "https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83epu5jNibT5PYAA1ftoXibsTy5rdO2FIIDJ9ZLMZFhDPnkheVG7q0icicOm7iaxiaEz4CQ9j7LzXlHCSG0og/132"
-      },
       code: {
         qr: "https://img0.baidu.com/it/u=3881180510,1470858589&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
       },
@@ -14,6 +27,7 @@ const _sfc_main = {
       }
     };
   },
+  computed: __spreadValues({}, common_vendor.mapState(["userInfo"])),
   methods: {
     tobalance() {
       common_vendor.index.navigateTo({
@@ -24,7 +38,7 @@ const _sfc_main = {
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return {
-    a: $data.userInfo.avatarUrl,
+    a: _ctx.userInfo.avatarUrl,
     b: $data.code.qr,
     c: $data.icon.yue,
     d: common_vendor.o((...args) => $options.tobalance && $options.tobalance(...args))

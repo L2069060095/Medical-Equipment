@@ -13,13 +13,16 @@
 					<view class="item2">
 						<text>收货地址</text>
 					</view>
-					
-					
+
+
 				</view>
 			</view>
 
 			<view class="login">
-				<button open-type="getUserInfo" @tap="getUserProfile" size="mini"> 获取头像昵称 </button>
+				<view v-if="!$store.state.userInfo.avatarUrl">
+					<button open-type="getUserInfo" @tap="getUserProfile" size="mini"> 获取头像昵称
+					</button>
+				</view>
 			</view>
 
 			<view class="content">
@@ -59,41 +62,42 @@
 
 		<view class="order">
 			<view class="title">
-				我的订单
+				<text class="item1">我的订单</text>
+				<text class="item2">查看更多 ></text>
 			</view>
 			<view class="state">
 				<view class="item">
 					<uni-icons type="wallet-filled" size="20"></uni-icons>
 					<view>
-						代付款
+						待付款
 					</view>
 				</view>
 
 				<view class="item">
-					<uni-icons type="wallet-filled" size="20"></uni-icons>
+					<uni-icons type="gift-filled" size="20"></uni-icons>
 					<view>
-						代付款
+						待发货
 					</view>
 				</view>
 
 				<view class="item">
-					<uni-icons type="wallet-filled" size="20"></uni-icons>
+					<uni-icons type="home-filled" size="20"></uni-icons>
 					<view>
-						代付款
+						待收货
 					</view>
 				</view>
 
 				<view class="item">
-					<uni-icons type="wallet-filled" size="20"></uni-icons>
+					<uni-icons type="calendar-filled" size="20"></uni-icons>
 					<view>
-						代付款
+						已完成
 					</view>
 				</view>
 
 				<view class="item">
-					<uni-icons type="wallet-filled" size="20"></uni-icons>
+					<uni-icons type="shop-filled" size="20"></uni-icons>
 					<view>
-						代付款
+						售后
 					</view>
 				</view>
 
@@ -114,7 +118,15 @@
 					优惠券
 				</view>
 				<view class="">
-					0
+					<view v-if="youhui.msg1&&youhui2.msg1">
+						2
+					</view>
+					<view v-else-if="youhui.msg1||youhui2.msg1">
+						1
+					</view>
+					<view v-else>
+						0
+					</view>
 				</view>
 			</view>
 		</view>
@@ -136,69 +148,102 @@
 </template>
 
 <script>
+	import {
+		mapMutations,mapState
+	} from 'vuex'
 	export default {
 		data() {
 			return {
 				userInfo: {},
-				
 			}
 		},
+		computed: {
+			...mapState(['youhui','youhui2'])
+		},
+		
 		methods: {
+			...mapMutations(['save']),
 			getUserProfile(e) {
-				wx.getUserProfile({
-					desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+				uni.getUserProfile({
+					desc: '用于完善会员资料',
+					// 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
 					success: (res) => {
-						// console.log(res);
-						console.log(res.userInfo.avatarUrl);//获取用户微信头像
+						// console.log(res,e);
+						// console.log(res.userInfo.avatarUrl); //获取用户微信头像
 						// console.log(res.userInfo.nickName);//获取用户微信名
 						this.userInfo = res.userInfo
+						var user = {
+							avatarUrl:this.userInfo.avatarUrl,
+							nickName:this.userInfo.nickName
+						}
+						this.save(user)
+						uni.login({
+							provider: 'weixin',
+							success: (res) => {
+								// console.log(res)
+								//这里获取的是用户的code，用来换取 openid、unionid、session_key 等信息，
+								// 再将信息丢给后台自己的登录业务就行了
+
+							}
+						})
+					},
+					fail: (err) => {
+						console.log(err);
 					}
+
+
 				})
-			},		
-			tomessage(){
+			},
+			tomessage() {
 				uni.navigateTo({
 					url: "/pages/ldhmymessage/ldhmymessage",
 				});
+				
 			},
-			tocollection(){
+			tocollection() {
+				if(!this.userInfo.nickName) return;//只有拿到当前用户名才可以查看收藏
+				
 				uni.navigateTo({
 					url: "/pages/ldhcollection/ldhcollection",
 				});
 			},
-			toscore(){
+			toscore() {
+				if(!this.userInfo.nickName) return;
 				uni.navigateTo({
 					url: "/pages/ldhscore/ldhscore",
 				});
 			},
-			todiscount(){
+			todiscount() {
+				if(!this.userInfo.nickName) return;
 				uni.navigateTo({
 					url: "/pages/ldhdiscount/ldhdiscount",
 				});
 			},
-			tocard(){
+			tocard() {
+				if(!this.userInfo.nickName) return;
 				uni.navigateTo({
 					url: "/pages/ldhcard/ldhcard",
 				});
 			},
-			
-			
+
+
 
 		},
+
 		created() {
-			
+
 		}
 	}
-	
 </script>
 
 <style lang="less" scoped>
 	.container {
 
-		
+
 		font-size: 14px;
 		line-height: 24px;
-		
-		
+
+
 		.head {
 			color: white;
 			padding-bottom: 60rpx;
@@ -210,7 +255,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				
+
 				.imgname {
 					display: flex;
 					align-items: center;
@@ -231,23 +276,24 @@
 				}
 
 				.address {
-					
-					border: 1px solid black;
+
+					border: 1px solid white;
 					border-right: none;
 					border-radius: 50rpx 0 0 50rpx;
 					display: flex;
-					
+
 					align-items: center;
-					.item2{
+
+					.item2 {
 						width: 60px;
 					}
 				}
 
 			}
 
-			.login{
+			.login {
 				text-align: center;
-				
+
 			}
 
 			.content {
@@ -289,10 +335,18 @@
 			margin-top: -60rpx;
 			background-color: white;
 			border-radius: 16rpx;
+			border: 1px solid #ccc;
 
 			.title {
 				margin-top: 10rpx;
 				margin-left: 20rpx;
+				display: flex;
+				justify-content: space-between;
+				.item2{
+					margin-right: 20rpx;
+					font-size: 10px;
+					color: #777;
+				}
 			}
 
 			.state {
@@ -309,12 +363,12 @@
 		}
 
 		.activity {
-			
+
 			margin-top: 20rpx;
 			margin-bottom: 20rpx;
 			display: flex;
 			height: 120rpx;
-			
+
 			box-sizing: border-box;
 
 			.score {
@@ -323,6 +377,7 @@
 				border-radius: 18rpx;
 				margin-right: 20rpx;
 				margin-left: 20rpx;
+
 				view {
 					margin-left: 20rpx;
 					margin-top: 10rpx;
@@ -334,6 +389,7 @@
 				background-color: darkgray;
 				border-radius: 18rpx;
 				margin-right: 20rpx;
+
 				view {
 					margin-left: 20rpx;
 					margin-top: 10rpx;
@@ -347,6 +403,7 @@
 			border-radius: 18rpx;
 			margin-left: 20rpx;
 			margin-right: 20rpx;
+
 			view {
 				margin-top: 10rpx;
 				margin-left: 20rpx;
@@ -357,7 +414,7 @@
 			margin-top: 20rpx;
 			font-weight: bold;
 			margin-left: 20rpx;
-			
+
 		}
 	}
 </style>

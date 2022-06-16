@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports[Symbol.toStringTag] = "Module";
 var common_vendor = require("./common/vendor.js");
+var store_ldhindex = require("./store/ldhindex.js");
 if (!Math) {
   "./pages/index/index.js";
   "./pages/class/class.js";
@@ -17,6 +18,9 @@ if (!Math) {
   "./pages/ldhdiscount/ldhdiscount.js";
   "./pages/ldhcard/ldhcard.js";
   "./pages/ldhbalance/ldhbalance.js";
+  "./pages/ldhget/ldhget.js";
+  "./pages/ldhconvert/ldhconvert.js";
+  "./pages/ldhgrade/ldhgrade.js";
 }
 const _sfc_main = {
   onLaunch: function() {
@@ -33,6 +37,7 @@ const _sfc_main = {
 var App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "F:/uni/vue/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
+  app.use(store_ldhindex.store);
   return {
     app
   };

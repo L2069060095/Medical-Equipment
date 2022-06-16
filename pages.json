@@ -95,6 +95,28 @@
 				"enablePullDownRefresh": false
 			}
 
+		},
+		{
+			"path": "pages/ldhget/ldhget",
+			"style": {
+				"navigationBarTitleText": "领券中心",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/ldhconvert/ldhconvert",
+			"style": {
+				"navigationBarTitleText": "我的兑换",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/ldhgrade/ldhgrade",
+			"style": {
+				"navigationBarTitleText": "积分明细",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"globalStyle": {
